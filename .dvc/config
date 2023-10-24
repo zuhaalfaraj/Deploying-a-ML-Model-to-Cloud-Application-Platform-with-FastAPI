@@ -1,0 +1,6 @@
+[core]
+    remote = remote
+['remote "myremote"']
+    url = s3://project3-mldevop
+['remote "remote"']
+    url = s3://project3-mldevop
