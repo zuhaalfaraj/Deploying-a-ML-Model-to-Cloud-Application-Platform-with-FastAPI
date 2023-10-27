@@ -5,7 +5,8 @@ from fastapi import FastAPI, HTTPException, Body
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import joblib
-
+import os
+import pandas as pd
 
 # Loading the saved model
 model = joblib.load('model/trained_model.pkl')
@@ -74,3 +75,9 @@ def make_prediction(item: DataItem):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull") != 0:
+        exit("dvc pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
